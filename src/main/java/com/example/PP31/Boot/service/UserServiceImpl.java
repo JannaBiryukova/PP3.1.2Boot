@@ -11,20 +11,18 @@ import java.util.List;
 
 
 @Service
-public class ServiceImpl implements com.example.PP31.Boot.service.Service {
-
+public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
 
     @Autowired
-    public ServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
 
     @Override
-    @Transactional
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
@@ -37,20 +35,20 @@ public class ServiceImpl implements com.example.PP31.Boot.service.Service {
 
     @Override
     @Transactional
-    public void deleteUser(int userId) {
+    public void deleteUser(long userId) {
         userDao.deleteUser(userId);
     }
 
     @Override
     @Transactional
-    public void updateUser(int id, User user) {
+    public void updateUser(long id, User user) {
         userDao.updateUser(id, user);
     }
 
     @Override
-    @Transactional
-    public User getUser(int userId) {
+    public User getUser(long userId) {
         return userDao.getUser(userId);
     }
+
 
 }

@@ -1,7 +1,7 @@
 package com.example.PP31.Boot.controller;
 
 import com.example.PP31.Boot.model.User;
-import com.example.PP31.Boot.service.Service;
+import com.example.PP31.Boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,20 +15,19 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(value = "")
 public class UserController {
 
-    private final Service service;
+    private final UserService service;
 
     @Autowired
-    public UserController(Service service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 
-    @GetMapping("")
+    @GetMapping
     public String getAllUsers(Model model) {
         List<User> users = service.getAllUsers();
-        model.addAttribute("users", users);
+        model.addAttribute("allUsers", users);
         return "users";
     }
 
@@ -47,7 +46,7 @@ public class UserController {
 
     //upd
     @GetMapping("/update_user")
-    public String getWhatUpdateUser(Model model) {
+    public String getUpdateUserForm(Model model) {
         model.addAttribute("userUpdate", new User());
         return "update_user";
     }
@@ -63,8 +62,10 @@ public class UserController {
     }
 
     //delete
+
+    //
     @GetMapping("/delete_user")
-    public String getWhatDeleteUser(Model model) {
+    public String getDeleteUserForm(Model model) {
         model.addAttribute("userDelete", new User());
         return "delete_user";
     }

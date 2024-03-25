@@ -25,13 +25,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(int userId) {
+    public void deleteUser(long userId) {
         User user = entityManager.find(User.class, userId);
         entityManager.remove(user);
     }
 
     @Override
-    public void updateUser(int id, User userUpdate) {
+    public void updateUser(long id, User userUpdate) {
         User user = getUser(id);
         user.setName(userUpdate.getName());
         user.setEmail(userUpdate.getEmail());
@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public User getUser(int userId) {
+    public User getUser(long userId) {
         return entityManager.find(User.class, userId);
     }
 }
