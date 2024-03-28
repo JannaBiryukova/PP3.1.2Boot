@@ -8,10 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
-import java.util.List;
 
 
 @Controller
@@ -26,8 +25,7 @@ public class UserController {
 
     @GetMapping
     public String getAllUsers(Model model) {
-        List<User> users = service.getAllUsers();
-        model.addAttribute("allUsers", users);
+        model.addAttribute("allUsers", service.getAllUsers());
         return "users";
     }
 
@@ -46,38 +44,22 @@ public class UserController {
 
     //upd
     @GetMapping("/update_user")
-    public String getUpdateUserForm(Model model) {
-        model.addAttribute("userUpdate", new User());
+    public String getUpdateUserForm(@RequestParam("id") long userId, Model model) {
+        model.addAttribute("userUpdate", service.getUser(userId));
         return "update_user";
     }
 
     @PostMapping("/update_user")
-    public String getUpdateUser(@ModelAttribute("userUpdate") User user) {
-        try {
-            service.updateUser(user.getId(), user);
-        } catch (Exception e) {
-            System.out.println("No this user!");
-        }
+    public String updateUserData(@ModelAttribute("userUpdate") User user) {
+        service.updateUser(user.getId(), user);
         return "redirect:/";
     }
 
+
     //delete
-
-    //
-    @GetMapping("/delete_user")
-    public String getDeleteUserForm(Model model) {
-        model.addAttribute("userDelete", new User());
-        return "delete_user";
-    }
-
-    @PostMapping("/delete_user")
-    public String getDeleteUser(@ModelAttribute("userDelete") User user) {
-        try {
-            service.deleteUser(user.getId());
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
-
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam("id") long id) {
+        service.deleteUser(id);
         return "redirect:/";
     }
 
